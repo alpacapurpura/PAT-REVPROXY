@@ -12,7 +12,6 @@ api:
 entryPoints:
   web:
     address: ":80"
-    # Añade esta sección para redirigir todo el tráfico HTTP a HTTPS
     http:
       redirections:
         entryPoint:
