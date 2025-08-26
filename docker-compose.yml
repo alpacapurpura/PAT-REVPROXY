@@ -15,24 +15,15 @@ services:
       - ./traefik.yml:/traefik.yml:ro
       - ./acme.json:/acme.json
     labels:
-      # --- Habilitar el dashboard de Traefik ---
       - "traefik.enable=true"
-      
-      # --- Router HTTP para redirigir a HTTPS ---
       - "traefik.http.routers.traefik-dashboard-http.rule=Host(`traefik.andessuyo.com`)"
       - "traefik.http.routers.traefik-dashboard-http.entrypoints=web"
       - "traefik.http.routers.traefik-dashboard-http.middlewares=redirect-to-https@file"
-      
-      # --- Router HTTPS seguro para el dashboard ---
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.andessuyo.com`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
-      - "traefik.http.routers.traefik-dashboard.service=api@internal" # Apunta al servicio interno del dashboard
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
-      
-      # --- Middleware de Autenticación (¡LA PARTE CLAVE!) ---
-      - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/" # PEGA AQUÍ TU LÍNEA GENERADA
-      
-      # --- Aplicar el Middleware de Autenticación al Router del Dashboard ---
+      - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/"
       - "traefik.http.routers.traefik-dashboard.middlewares=auth"
 networks:
   web_gateway:

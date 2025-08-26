@@ -17,7 +17,6 @@ entryPoints:
 
 http:
   middlewares:
-    # Define un middleware llamado 'redirect-to-https'
     redirect-to-https:
       redirectScheme:
         scheme: https
