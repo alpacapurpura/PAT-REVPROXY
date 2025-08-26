@@ -15,16 +15,24 @@ services:
       - ./traefik.yml:/traefik.yml:ro
       - ./acme.json:/acme.json
     labels:
+      labels:
       - "traefik.enable=true"
+      
+      # --- Router HTTP ---
       - "traefik.http.routers.traefik-dashboard-http.rule=Host(`traefik.andessuyo.com`)"
       - "traefik.http.routers.traefik-dashboard-http.entrypoints=web"
-      - "traefik.http.routers.traefik-dashboard-http.middlewares=redirect-to-https@file"
+      - "traefik.http.routers.traefik-dashboard-http.middlewares=redirect-to-https" # <-- Aplicar middleware
+      
+      # --- Router HTTPS ---
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.andessuyo.com`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
-      - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/"
-      - "traefik.http.routers.traefik-dashboard.middlewares=auth"
+      - "traefik.http.routers.traefik-dashboard.middlewares=auth" # <-- Aplicar middleware de autenticación
+      
+      # --- Definición de Middlewares ---
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https" # <-- Definir redirección
+      - "traefik.http.middlewares.auth.basicauth.users=admin:$apr1$c2B3pdbu$/nKhbcoeB9Qf8yM7kVX/e/" # <-- Definir autenticación
 networks:
   web_gateway:
     external: true

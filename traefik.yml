@@ -12,15 +12,14 @@ api:
 entryPoints:
   web:
     address: ":80"
+    # Añade esta sección para redirigir todo el tráfico HTTP a HTTPS
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
   websecure:
     address: ":443"
-
-http:
-  middlewares:
-    redirect-to-https:
-      redirectScheme:
-        scheme: https
-        permanent: true
 
 providers:
   docker:
