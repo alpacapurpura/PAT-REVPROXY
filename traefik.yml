@@ -24,7 +24,7 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
-    network: web_gateway
+    #network: web_gateway
 
 certificatesResolvers:
   letsencrypt:

@@ -15,7 +15,8 @@ services:
       - ./traefik.yml:/traefik.yml:ro
       - ./acme.json:/acme.json
     labels:
-      - "traefik.enable=true"      
+      - "traefik.enable=true"
+      - "traefik.docker.network=web_gateway"
       # La redirección de HTTP a HTTPS ya es manejada globalmente por traefik.yml
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.andessuyo.com`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
