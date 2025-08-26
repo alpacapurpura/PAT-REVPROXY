@@ -32,7 +32,7 @@ services:
       
       # --- Definición de Middlewares ---
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https" # <-- Definir redirección
-      - "traefik.http.middlewares.auth.basicauth.users=admin:$apr1$c2B3pdbu$/nKhbcoeB9Qf8yM7kVX/e/" # <-- Definir autenticación
+      - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/" # <-- Definir autenticación
 networks:
   web_gateway:
     external: true
