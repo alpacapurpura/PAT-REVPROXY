@@ -12,13 +12,11 @@ api:
 entryPoints:
   web:
     address: ":80"
-    # --- AÑADE ESTA SECCIÓN COMPLETA ---
     http:
       redirections:
         entryPoint:
           to: websecure
           scheme: https
-          permanent: true
   websecure:
     address: ":443"
 

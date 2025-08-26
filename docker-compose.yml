@@ -10,11 +10,6 @@ services:
       - "443:443"
     networks:
       - web_gateway
-    healthcheck:
-      test: ["CMD", "traefik", "healthcheck"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yml:/traefik.yml:ro
