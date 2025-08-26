@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   traefik:
     image: traefik:latest
@@ -32,7 +30,7 @@ services:
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
       
       # --- Middleware de Autenticación (¡LA PARTE CLAVE!) ---
-      - "traefik.http.middlewares.auth.basicauth.users=admin:$apr1$c2B3pdbu$/nKhbcoeB9Qf8yM7kVX/e/" # PEGA AQUÍ TU LÍNEA GENERADA
+      - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/" # PEGA AQUÍ TU LÍNEA GENERADA
       
       # --- Aplicar el Middleware de Autenticación al Router del Dashboard ---
       - "traefik.http.routers.traefik-dashboard.middlewares=auth"
