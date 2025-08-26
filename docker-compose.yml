@@ -18,7 +18,7 @@ services:
       - ./acme.json:/acme.json
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.patcocloud.com`)" # Reemplazar con un subdominio real
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.andessuyo.com`)" # Reemplazar con un subdominio real
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
