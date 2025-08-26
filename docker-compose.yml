@@ -14,14 +14,21 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yml:/traefik.yml:ro
       - ./acme.json:/acme.json
-    labels:
+  labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.andessuyo.com`)" # Reemplazar con un subdominio real
+
+      # --- Router HTTP para redirigir a HTTPS (añadido) ---
+      - "traefik.http.routers.traefik-dashboard-http.rule=Host(`traefik.andessuyo.com`)"
+      - "traefik.http.routers.traefik-dashboard-http.entrypoints=web"
+      - "traefik.http.routers.traefik-dashboard-http.middlewares=redirect-to-https@file"
+
+      # --- Router HTTPS seguro (existente) ---
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.andessuyo.com`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
       - "traefik.http.routers.traefik-dashboard.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/" # <-- Definir autenticación
+      - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/"
 networks:
   web_gateway:
     external: true
