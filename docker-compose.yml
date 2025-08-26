@@ -20,28 +20,13 @@ services:
       - ./traefik.yml:/traefik.yml:ro
       - ./acme.json:/acme.json
     labels:
-      - "traefik.enable=true"
-      
-      # --- Router HTTP (Inseguro) ---
-      # Regla para capturar el tráfico HTTP para el dashboard
-      - "traefik.http.routers.traefik-dashboard-http.rule=Host(`traefik.andessuyo.com`)"
-      - "traefik.http.routers.traefik-dashboard-http.entrypoints=web"
-      # Le decimos que use el middleware de redirección que definiremos más abajo
-      - "traefik.http.routers.traefik-dashboard-http.middlewares=redirect-to-https"
-      
-      # --- Router HTTPS (Seguro) ---
-      # Regla para capturar el tráfico HTTPS para el dashboard
+      - "traefik.enable=true"      
+      # La redirección de HTTP a HTTPS ya es manejada globalmente por traefik.yml
       - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.andessuyo.com`)"
       - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
       - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
       - "traefik.http.routers.traefik-dashboard.service=api@internal"
-      # Le decimos que use el middleware de autenticación que definiremos más abajo
-      - "traefik.http.routers.traefik-dashboard.middlewares=auth"
-      
-      # --- Definición de Middlewares ---
-      # 1. Creamos el middleware de redirección
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      # 2. Creamos el middleware de autenticación
+      - "traefik.http.routers.traefik-dashboard.middlewares=auth"     
       - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$c2B3pdbu$$/nKhbcoeB9Qf8yM7kVX/e/"
 networks:
   web_gateway:
